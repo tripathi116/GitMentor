@@ -165,15 +165,7 @@ const Home = () => {
                             {user.name}
                         </span>
                     )}
-                    <motion.button
-                        className="flex flex-col gap-1.5 p-2"
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.95 }}
-                    >
-                        <motion.span className="block w-6 h-[2px] bg-[#1A1A1A]" />
-                        <motion.span className="block w-4 h-[2px] bg-[#1A1A1A]" />
-                        <motion.span className="block w-6 h-[2px] bg-[#1A1A1A]" />
-                    </motion.button>
+
                 </div>
             </motion.nav>
 
@@ -199,7 +191,7 @@ const Home = () => {
                             className="text-[10px] md:text-xs text-[#6B7280] uppercase block mb-4"
                             style={{ fontFamily: "JetBrains Mono, monospace", letterSpacing: "0.15em" }}
                         >
-                            AI-Powered GitHub Analysis TO
+                            AI-Powered GitHub Analysis To
                         </span>
                     </motion.div>
 
@@ -710,7 +702,7 @@ const Home = () => {
                         className="text-[10px] text-[#9CA3AF] uppercase"
                         style={{ fontFamily: "JetBrains Mono, monospace", letterSpacing: "0.12em" }}
                     >
-                        AI-POWERED · GEMINI 2.5
+                        AI-POWERED · GEMINI 3
                     </span>
                     <span
                         className="text-[10px] text-[#9CA3AF] uppercase"
