@@ -50,13 +50,15 @@ body {
   box-sizing: border-box;
 }
 
-h1,
-h2,
-h3,
-h4 {
-  font-family: var(--heading);
-  font-weight: 500;
-  color: var(--text-h);
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--heading);
+    font-weight: 500;
+    color: var(--text-h);
+  }
 }
 
 h1 {
