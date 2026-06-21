@@ -8,7 +8,7 @@ import robotImg from "../assets/ax09_robot.png";
 import axios from "axios";
 
 const Home = () => {
-    const { user, logout, updateUser } = useAuth();
+    const { user, loading: authLoading, logout, updateUser } = useAuth();
     const navigate = useNavigate();
     const [loaded, setLoaded] = useState(false);
     const [repoUrl, setRepoUrl] = useState("");
@@ -62,6 +62,11 @@ const Home = () => {
     // Fetch reports
     useEffect(() => {
         const fetchReports = async () => {
+            if (authLoading) return;
+            if (!user) {
+                setReports([]);
+                return;
+            }
             try {
                 const data = await getMyReports();
                 setReports(data.reports || []);
@@ -70,7 +75,7 @@ const Home = () => {
             }
         };
         fetchReports();
-    }, []);
+    }, [user, authLoading]);
 
     // Section observer
     useEffect(() => {
@@ -91,6 +96,10 @@ const Home = () => {
 
     const handleGenerate = async () => {
         if (!repoUrl.trim()) return;
+        if (!user) {
+            navigate("/login");
+            return;
+        }
         setLoading(true);
         setError("");
         try {
@@ -157,13 +166,23 @@ const Home = () => {
                     GITMENTOR
                 </motion.h1>
                 <div className="flex items-center gap-4">
-                    {user && (
+                    {user ? (
                         <span
                             className="text-[10px] text-[#6B7280] uppercase hidden sm:block"
                             style={{ fontFamily: "JetBrains Mono, monospace", letterSpacing: "0.1em" }}
                         >
                             {user.name}
                         </span>
+                    ) : (
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            onClick={() => navigate("/login")}
+                            className="px-4 py-2 border border-[#1A1A1A] rounded-xl text-xs uppercase tracking-wider font-semibold text-[#1A1A1A] hover:bg-[#1A1A1A] hover:text-[#F8F9FB] transition-all duration-300"
+                            style={{ fontFamily: "Inter, sans-serif" }}
+                        >
+                            Sign In
+                        </motion.button>
                     )}
 
                 </div>
@@ -817,11 +836,11 @@ const Home = () => {
                                             </button>
                                         </div>
                                     </form>
-                                ) : (
+                                ) : user ? (
                                     <div className="space-y-3">
                                         <div className="p-3 bg-white/60 border border-[#1A1A1A]/5 rounded-xl">
                                             <div className="text-[9px] text-[#9CA3AF] uppercase font-mono tracking-wider mb-0.5">Name</div>
-                                            <div className="text-xs font-semibold text-[#1A1A1A]">{user?.name || "Guest"}</div>
+                                            <div className="text-xs font-semibold text-[#1A1A1A]">{user.name}</div>
                                         </div>
                                         <div className="p-3 bg-white/60 border border-[#1A1A1A]/5 rounded-xl">
                                             <div className="text-[9px] text-[#9CA3AF] uppercase font-mono tracking-wider mb-0.5">Password</div>
@@ -845,6 +864,22 @@ const Home = () => {
                                                 Sign Out
                                             </button>
                                         </div>
+                                    </div>
+                                ) : (
+                                    <div className="space-y-4 py-2 text-center">
+                                        <p className="text-xs text-[#6B7280]" style={{ fontFamily: "Inter, sans-serif" }}>
+                                            Please sign in to manage your account and view your report history.
+                                        </p>
+                                        <button
+                                            onClick={() => {
+                                                setShowAccountPopup(false);
+                                                navigate("/login");
+                                            }}
+                                            className="w-full py-2.5 rounded-lg bg-[#1A1A1A] text-white text-xs font-bold uppercase tracking-wider hover:bg-[#1A1A1A]/90 transition-colors"
+                                            style={{ fontFamily: "Inter, sans-serif" }}
+                                        >
+                                            Sign In
+                                        </button>
                                     </div>
                                 )}
                             </motion.div>

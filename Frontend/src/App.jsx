@@ -19,12 +19,12 @@ const App = () => {
                 element={<Register />}
             />
 
-            <Route element={<ProtectedRoute />}>
+            <Route
+                path="/"
+                element={<Home />}
+            />
 
-                <Route
-                    path="/"
-                    element={<Home />}
-                />
+            <Route element={<ProtectedRoute />}>
 
                 <Route
                     path="/report/:id"
