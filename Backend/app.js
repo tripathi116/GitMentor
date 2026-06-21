@@ -8,16 +8,21 @@ const app = express();
 
 const allowedOrigins = [
     process.env.FRONTEND_URL,
+    "https://gen-ai-project-ovqt.vercel.app",
     "http://localhost:5173",
     "http://localhost:5174"
 ].filter(Boolean);
 
 app.use(cors({
     origin: (origin, callback) => {
-        if (!origin || allowedOrigins.includes(origin)) {
+        // Normalize origin and allowed origins to compare without trailing slashes
+        const normalizedOrigin = origin ? origin.replace(/\/$/, "") : null;
+        const isAllowed = !origin || allowedOrigins.some(url => url.replace(/\/$/, "") === normalizedOrigin);
+        
+        if (isAllowed) {
             callback(null, true);
         } else {
-            callback(new Error("Not allowed by CORS"));
+            callback(new Error(`Not allowed by CORS`));
         }
     },
     credentials: true
