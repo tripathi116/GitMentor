@@ -107,7 +107,17 @@ const Home = () => {
             setReports((prev) => [data.report, ...prev]);
             navigate(`/report/${data.report._id}`);
         } catch (err) {
-            setError(err.response?.data?.message || "Failed to generate report");
+            let errMsg = err.response?.data?.message || "Failed to generate report";
+            const lowerMsg = errMsg.toLowerCase();
+            if (
+                lowerMsg.includes("experiencing high demand") ||
+                lowerMsg.includes("503") ||
+                lowerMsg.includes("service unavailable") ||
+                lowerMsg.includes("googlegenerativeai error")
+            ) {
+                errMsg = "Experiencing high demand, please try again after some time.";
+            }
+            setError(errMsg);
         } finally {
             setLoading(false);
         }
