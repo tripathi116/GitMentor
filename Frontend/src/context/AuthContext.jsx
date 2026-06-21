@@ -29,8 +29,18 @@ export const AuthProvider = ({ children }) => {
         setUser(userData);
     };
 
-    const logout = () => {
-        setUser(null);
+    const logout = async () => {
+        try {
+            await axios.post(
+                `${import.meta.env.VITE_API_URL}/api/auth/logout`,
+                {},
+                { withCredentials: true }
+            );
+        } catch (error) {
+            console.error("Logout request failed:", error);
+        } finally {
+            setUser(null);
+        }
     };
 
     const updateUser = (updatedData) => {

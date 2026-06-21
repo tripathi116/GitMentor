@@ -94,4 +94,19 @@ const updateProfile = async (req, res) => {
     }
 };
 
-module.exports = { registerUser, loginUser, getMe, updateProfile }; 
+const logoutUser = async (req, res) => {
+    try {
+        const isProduction = process.env.NODE_ENV === "production";
+        res.cookie("token", "", {
+            httpOnly: true,
+            secure: isProduction,
+            sameSite: isProduction ? "none" : "lax",
+            expires: new Date(0)
+        });
+        res.status(200).json({ message: "Logged out successfully" });
+    } catch (error) {
+        res.status(500).json({ message: error.message });
+    }
+};
+
+module.exports = { registerUser, loginUser, getMe, updateProfile, logoutUser }; 
