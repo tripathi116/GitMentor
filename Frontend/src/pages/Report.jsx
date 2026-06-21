@@ -16,7 +16,6 @@ const Report = () => {
     const [language, setLanguage] = useState("English");
     const [animateProgress, setAnimateProgress] = useState(false);
     const [activeSection, setActiveSection] = useState("project-summary");
-    const [copied, setCopied] = useState(false);
 
     useEffect(() => {
         if (report) {
@@ -442,93 +441,31 @@ const Report = () => {
                                 { id: "how-to-understand", title: "📖 How to Understand This Project", content: sections.howToUnderstand, placeholder: "No guidance details available." }
                             ];
 
-                            return sectionConfigs.map((sec) => {
-                                if (sec.id === "visual-tree") {
-                                    return (
-                                        <div
-                                            key={sec.id}
-                                            id={sec.id}
-                                            className="bg-[#0B0F19] border border-slate-800 rounded-2xl p-6 sm:p-8 text-left relative shadow-lg transition-all duration-300"
-                                        >
-                                            {/* Folder Header */}
-                                            <div className="flex items-center justify-between mb-4 border-b border-slate-800 pb-4">
-                                                <div className="flex items-center gap-3">
-                                                    {/* Yellow Folder Icon */}
-                                                    <svg
-                                                        className="w-6 h-6 text-amber-400 fill-current"
-                                                        viewBox="0 0 24 24"
-                                                    >
-                                                        <path d="M10 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V8c0-1.1-.9-2-2-2h-8l-2-2z" />
-                                                    </svg>
-                                                    <h3
-                                                        className="text-lg font-bold text-white tracking-wide"
-                                                        style={{ fontFamily: "Anton, sans-serif" }}
-                                                    >
-                                                        Project Structure
-                                                    </h3>
-                                                </div>
-                                            </div>
-
-                                            {/* Pre/Code box with Copy Button */}
-                                            <div className="relative">
-                                                <button
-                                                    onClick={() => {
-                                                        navigator.clipboard.writeText(sec.content || "");
-                                                        setCopied(true);
-                                                        setTimeout(() => setCopied(false), 2000);
-                                                    }}
-                                                    className="absolute top-4 right-4 p-2 text-slate-400 hover:text-white bg-slate-800/40 hover:bg-slate-800 rounded-lg transition-all border border-slate-700/30 cursor-pointer flex items-center justify-center"
-                                                    title="Copy to clipboard"
-                                                >
-                                                    {copied ? (
-                                                        <span className="flex items-center gap-1.5 text-[10px] text-emerald-400 font-semibold font-mono">
-                                                            <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2.5" viewBox="0 0 24 24">
-                                                                <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
-                                                            </svg>
-                                                            Copied!
-                                                        </span>
-                                                    ) : (
-                                                        <svg className="w-4 h-4" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24">
-                                                            <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-                                                            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
-                                                        </svg>
-                                                    )}
-                                                </button>
-
-                                                <pre className="font-mono text-xs sm:text-sm bg-[#060810] border border-slate-900/60 p-6 rounded-xl overflow-x-auto text-slate-300 leading-relaxed shadow-[inset_0_2px_4px_rgba(0,0,0,0.2)] pt-12 pr-12">
-                                                    {sec.content}
-                                                </pre>
-                                            </div>
-                                        </div>
-                                    );
-                                }
-
-                                return (
-                                    <div
-                                        key={sec.id}
-                                        id={sec.id}
-                                        className="bg-white/40 border border-[#1A1A1A]/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 text-left relative shadow-sm transition-all hover:bg-white/50 duration-300"
+                            return sectionConfigs.map((sec) => (
+                                <div
+                                    key={sec.id}
+                                    id={sec.id}
+                                    className="bg-white/40 border border-[#1A1A1A]/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 text-left relative shadow-sm transition-all hover:bg-white/50 duration-300"
+                                >
+                                    <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t border-l border-[#1A1A1A]/20" />
+                                    <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t border-r border-[#1A1A1A]/20" />
+                                    <h3
+                                        className="text-base font-bold mb-4 text-[#1A1A1A] border-b border-[#1A1A1A]/10 pb-3 uppercase tracking-wider"
+                                        style={{ fontFamily: "Anton, sans-serif", color: "#1A1A1A" }}
                                     >
-                                        <div className="absolute top-3 left-3 w-2.5 h-2.5 border-t border-l border-[#1A1A1A]/20" />
-                                        <div className="absolute top-3 right-3 w-2.5 h-2.5 border-t border-r border-[#1A1A1A]/20" />
-                                        <h3
-                                            className="text-base font-bold mb-4 text-[#1A1A1A] border-b border-[#1A1A1A]/10 pb-3 uppercase tracking-wider"
-                                            style={{ fontFamily: "Anton, sans-serif", color: "#1A1A1A" }}
-                                        >
-                                            {sec.title}
-                                        </h3>
-                                        {sec.isPre ? (
-                                            <pre className="font-mono text-xs sm:text-sm bg-white/80 border border-[#1A1A1A]/10 p-5 rounded-xl overflow-x-auto text-[#1A1A1A] leading-relaxed shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
-                                                {sec.content}
-                                            </pre>
-                                        ) : (
-                                            <div className="text-sm leading-relaxed text-[#374151] whitespace-pre-wrap font-sans">
-                                                {sec.content || sec.placeholder}
-                                            </div>
-                                        )}
-                                    </div>
-                                );
-                            });
+                                        {sec.title}
+                                    </h3>
+                                    {sec.isPre ? (
+                                        <pre className="font-mono text-xs sm:text-sm bg-white/80 border border-[#1A1A1A]/10 p-5 rounded-xl overflow-x-auto text-[#1A1A1A] leading-relaxed shadow-[inset_0_2px_4px_rgba(0,0,0,0.02)]">
+                                            {sec.content}
+                                        </pre>
+                                    ) : (
+                                        <div className="text-sm leading-relaxed text-[#374151] whitespace-pre-wrap font-sans">
+                                            {sec.content || sec.placeholder}
+                                        </div>
+                                    )}
+                                </div>
+                            ));
                         })()}
                     </div>
 
