@@ -8,12 +8,10 @@ const app = express();
 
 const allowedOrigins = [
     process.env.FRONTEND_URL,
-
+    "https://git-mentor-eight.vercel.app",
     "http://localhost:5173",
     "http://localhost:5174"
 ].filter(Boolean);
-
-console.log("Allowed Origins:", allowedOrigins);
 
 app.use(cors({
     origin: (origin, callback) => {
