@@ -3,6 +3,7 @@
 **GitMentor** is an AI-powered MERN stack application designed to help developers of all skill levels instantly analyze, understand, and evaluate any GitHub repository. By leveraging Google's **Gemini AI**, GitMentor generates comprehensive breakdowns tailored for beginners (in both English and Hinglish) and professionals, alongside quantitative repository health scores.
 
 🔗 **Live Demo:** [https://git-mentor-eight.vercel.app/](https://git-mentor-eight.vercel.app/)
+
 💻 **GitHub Repository:** [https://github.com/tripathi116/GitMentor](https://github.com/tripathi116/GitMentor)
 
 ---
